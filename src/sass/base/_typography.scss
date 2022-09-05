@@ -1,0 +1,29 @@
+body {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 300;
+}
+
+.heading-1,
+.heading-2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+}
+
+.heading-1 {
+  color: $colour-white;
+}
+
+.heading-2 {
+  align-self: flex-start;
+  font-size: 3rem;
+  margin-left: 3rem;
+}
+
+.btn {
+  font-family: 'Work Sans', sans-serif;
+}
+
+.error-message {
+  font-size: 1.5rem;
+  color: $colour-grey-dark;
+}

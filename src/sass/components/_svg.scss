@@ -1,0 +1,54 @@
+.svg {
+  fill: currentColor;
+
+  &__search {
+    height: 1rem;
+    width: 1rem;
+  }
+
+  &__navigation {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+
+  &__repeat {
+    height: 2.5rem;
+    width: 2.5rem;
+    margin-right: 1rem;
+  }
+
+  &--spinning {
+    animation: rotate 2s;
+  }
+
+  &__spinner {
+    fill: $colour-grey-dark;
+    height: 2rem;
+    width: 2rem;
+    animation: rotate 2s infinite linear;
+  }
+
+  &__error {
+    height: 3rem;
+    width: 3rem;
+    margin-right: 1rem;
+  }
+
+  &__loading {
+    animation: fadeInOut 1s infinite linear;
+    position: relative;
+    height: 1rem;
+    width: 1rem;
+    margin: 0 0.5rem;
+    fill: $colour-grey-dark;
+
+    &--second {
+      animation-delay: 0.3s;
+      margin: 0 1rem;
+    }
+
+    &--third {
+      animation-delay: 0.6s;
+    }
+  }
+}

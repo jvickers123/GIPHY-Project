@@ -1,0 +1,21 @@
+.loading {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  max-width: calc(100vw - 6rem);
+  border: 2px solid $colour-grey;
+  border-radius: 5px;
+  position: absolute;
+  top: 0;
+
+  @include flexcenter(row);
+
+  &__search,
+  &__trending {
+    grid-column: inherit;
+  }
+
+  @include respond(desk) {
+    max-width: calc(100% - 6rem);
+  }
+}

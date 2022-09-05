@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/index.3e7ad75e.js" defer=""></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Work+Sans:wght@300;500&display=swap" rel="stylesheet">
+    <meta name="description" content="Find gifs and see what's trending">
+    <link rel="stylesheet" href="/index.f7626f62.css">
+    <title>Jonny's GIPHY Machine</title>
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="heading-1">Jonny's GIPHY Machine</h1>
+    </header>
+    <nav class="navigation">
+      <ul class="navigation__list">
+        <li class="navigation__item navigation__item--active" data-section="random">
+          <button class="btn btn__navigation btn__navigation--active">
+            <svg class="svg svg__navigation">
+              <use href="/icons.21bad73c.svg#icon-random"></use>
+            </svg>
+            <p>Random</p>
+          </button>
+        </li>
+
+        <li class="navigation__item" data-section="search">
+          <button class="btn btn__navigation">
+            <svg class="svg svg__navigation">
+              <use href="/icons.21bad73c.svg#icon-search"></use>
+            </svg>
+            <p>Finder</p>
+          </button>
+        </li>
+
+        <li class="navigation__item" data-section="trending">
+          <button class="btn btn__navigation">
+            <svg class="svg svg__navigation">
+              <use href="/icons.21bad73c.svg#icon-trending"></use>
+            </svg>
+            <p>Trending</p>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <main class="main">
+      <section class="section section__random">
+        <div class="small-heading-container">
+          <h2 class="heading-2">Random</h2>
+        </div>
+
+        <div class="img-container img-container__random"></div>
+
+        <button class="btn btn__random" aria-label="Get another random Gif">
+          <svg class="svg svg__repeat">
+            <use href="/icons.21bad73c.svg#icon-arrow-repeat"></use>
+          </svg>
+          <p>Get another</p>
+        </button>
+      </section>
+
+      <section class="section section__search hidden-small-screen">
+        <div class="small-heading-container">
+          <h2 class="heading-2">Finder</h2>
+          <form class="search">
+            <label for="search" class="visually-hidden">Search</label>
+            <input type="text" id="search" class="search__field" placeholder="Search for all the gifs in the world">
+            <button type="submit" class="btn btn__search" aria-label="search gifs">
+              <svg class="svg svg__search">
+                <use href="/icons.21bad73c.svg#icon-search"></use>
+              </svg>
+            </button>
+          </form>
+        </div>
+
+        <div class="grid grid__search-results"></div>
+      </section>
+
+      <section class="section section__trending hidden-small-screen">
+        <div class="small-heading-container">
+          <h2 class="heading-2">Trending</h2>
+        </div>
+
+        <div class="grid grid__trending"></div>
+      </section>
+    </main>
+  </body>
+</html>

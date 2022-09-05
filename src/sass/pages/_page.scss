@@ -1,0 +1,23 @@
+.main {
+  @include flexcenter(column);
+  justify-content: space-between;
+  position: relative;
+
+  @include respond(desk) {
+    flex-direction: row;
+    align-items: flex-start;
+    top: 0;
+    height: 100vh;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.hidden-small-screen {
+  display: none;
+  @include respond(desk) {
+    display: flex;
+  }
+}

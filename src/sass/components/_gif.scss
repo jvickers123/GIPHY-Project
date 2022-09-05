@@ -1,0 +1,11 @@
+.gif {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  min-height: 10rem;
+
+  &__figure-container {
+    height: 100%;
+    width: 100%;
+  }
+}

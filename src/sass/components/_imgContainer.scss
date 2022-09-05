@@ -1,0 +1,12 @@
+.img-container {
+  position: relative;
+  width: 100%;
+  margin-top: 15rem;
+  padding: 0 3rem;
+  max-height: 100%;
+
+  @include respond(desk) {
+    @include margin-top-desk;
+    min-height: 15rem;
+  }
+}

@@ -1,0 +1,5 @@
+.error-message {
+  grid-column: 2 / span 8;
+  grid-row: 5;
+  @include flexcenter(row);
+}

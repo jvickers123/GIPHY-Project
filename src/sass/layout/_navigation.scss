@@ -1,0 +1,36 @@
+.navigation {
+  width: 100%;
+  background-color: $colour-grey-light;
+  position: fixed;
+  top: 5rem;
+  z-index: 1;
+  // @include boxshadow-bottom;
+  @include flexcenter(row);
+
+  &__list {
+    justify-content: space-around;
+    @include flexcenter(row);
+    justify-content: space-around;
+    width: 100%;
+    max-width: 65rem;
+  }
+
+  &__item {
+    list-style: none;
+    display: inline-block;
+    border-radius: 5px;
+    @include flexcenter(column);
+
+    &--active {
+      border-bottom: 3px solid $colour-accent;
+    }
+
+    &:hover {
+      background-color: darken($colour-grey, 2%);
+    }
+  }
+
+  @include respond(desk) {
+    display: none;
+  }
+}

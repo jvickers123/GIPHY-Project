@@ -1,0 +1,21 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+*:focus-visible {
+  outline: 3px solid $colour-primary-dark;
+  outline-offset: 2px;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  // background-color: $colour-background;
+}

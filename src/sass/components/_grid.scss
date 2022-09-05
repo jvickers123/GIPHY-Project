@@ -1,0 +1,44 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-gap: 0.5rem;
+  margin-top: 12rem;
+  width: 100%;
+  padding: 0 3rem;
+  &__item {
+    position: relative;
+    &--1 {
+      grid-column: span 1;
+    }
+    &--2 {
+      grid-column: span 2;
+    }
+    &--3 {
+      grid-column: span 3;
+    }
+    &--4 {
+      grid-column: span 4;
+    }
+    &--5 {
+      grid-column: span 5;
+    }
+    &--6 {
+      grid-column: span 6;
+    }
+    &--7 {
+      grid-column: span 7;
+    }
+    &--8 {
+      grid-column: span 8;
+    }
+
+    &--9 {
+      grid-column: span 9;
+    }
+  }
+
+  @include respond(desk) {
+    overflow-y: scroll;
+    @include margin-top-desk;
+  }
+}

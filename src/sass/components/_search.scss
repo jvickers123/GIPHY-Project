@@ -1,0 +1,23 @@
+.search {
+  @include flexcenter(row);
+  // width: 100vw;
+  // position: sticky;
+  // top: 16rem;
+  // background-color: $colour-white;
+  padding: 0 3rem;
+  z-index: 1;
+  // @include boxshadow-bottom;
+
+  flex: 1;
+  &__field {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 3px 0 0 3px;
+    border: 0.5px solid $colour-grey-light;
+    border-right: none;
+
+    &:placeholder-shown {
+      text-overflow: ellipsis;
+    }
+  }
+}

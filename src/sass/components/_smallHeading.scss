@@ -1,0 +1,19 @@
+.small-heading-container {
+  position: sticky;
+  top: 11.2rem;
+  padding: 1rem;
+  align-self: stretch;
+  background-color: $colour-white;
+  // background-color: $colour-background;
+  @include boxshadow-bottom;
+  width: 100%;
+
+  border-bottom: 1px solid $colour-grey-light;
+  z-index: 1;
+
+  @include respond(desk) {
+    top: 7rem;
+    @include flexcenter(row);
+    justify-content: space-between;
+  }
+}
