@@ -1,6 +1,6 @@
 # GIPHY Project
 
-Website in vanilla Javascript, CSS and HTML.
+Website built using vanilla Javascript, CSS and HTML.
 
 ## Installation
 
