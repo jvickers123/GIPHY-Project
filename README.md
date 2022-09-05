@@ -1,4 +1,4 @@
-#GIPHY Project
+# GIPHY Project
 
 Website in vanilla Javascript, CSS and HTML.
 
