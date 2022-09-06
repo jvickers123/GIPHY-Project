@@ -1,6 +1,5 @@
-# ignore all . files but include . folders
-
 .parcel-cache/
 .prettierrc
 node_modules/
+dist/
 
