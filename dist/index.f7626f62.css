@@ -72,14 +72,29 @@ body {
 
 .btn {
   color: #1a1a1a;
+  cursor: pointer;
   background-color: #fed3c2;
   border: none;
+  transition: transform .1s;
+}
+
+.btn:hover {
+  background-color: #fdaf90;
+}
+
+.btn:active {
+  transform: translateY(.5px);
 }
 
 .btn__navigation {
   color: #1a1a1a;
   background-color: #0000;
   padding: .8rem 3rem;
+}
+
+.btn__navigation:hover {
+  background-color: #d8d8d8;
+  border-radius: 5px;
 }
 
 .btn__search {
@@ -401,7 +416,6 @@ body {
 }
 
 .navigation__item {
-  border-radius: 5px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -410,11 +424,9 @@ body {
 }
 
 .navigation__item--active {
+  background-color: #e4e4e4;
   border-bottom: 3px solid #fed3c2;
-}
-
-.navigation__item:hover {
-  background-color: #d0d0d0;
+  border-radius: 5px;
 }
 
 @media only screen and (min-width: 56.25em) {
