@@ -11,9 +11,16 @@ export default class ImageView {
   render(data) {
     if (!data) return;
 
+    // 1) Save data to the class
     this._data = data;
+
+    // 2) Generate html
     const html = this._generateMarkup();
+
+    // 3) Clear html that is already there
     this.#clear();
+
+    // 4) Insert new html
     this._parentElement.insertAdjacentHTML('afterbegin', html);
   }
 
@@ -45,9 +52,9 @@ export default class ImageView {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
-  renderSkeleton(className) {
+  renderSkeleton() {
     const markup = `    
-    <div class="loading loading__${className}">
+    <div class="loading loading__${this._className}">
       <svg class="svg__loading svg__loading--first">
         <use href="${icons}#icon-circle"></use>
       </svg>
@@ -85,29 +92,34 @@ export default class ImageView {
     });
   }
 
-  _generateImageMarkup(data) {
-    const { imageData, networkSpeed, className } = data;
+  _generateImageMarkup(imageData) {
+    // 1) Get network speed
+    const networkSpeed = this._data.networkSpeed;
 
-    // 1) Check size of image slot and the network speed and adjust src set accordingly
+    // 2) Variables for pixel density and still image sources
     let oneXImage;
     let twoXImage;
     let stillImage;
 
-    if (className === 'gif__random' && networkSpeed === '4g') {
+    // 3) If big image and good internet speed save HD sources.
+    if (this._className === 'random' && networkSpeed === '4g') {
       oneXImage = imageData.images.medium;
       twoXImage = imageData.images.original;
       stillImage = imageData.images.stills.normal;
+
+      // 4) For tiled images or when network speed is 3g use smaller sources
     } else {
       oneXImage = imageData.images.small;
       twoXImage = imageData.images.medium;
       stillImage = imageData.images.stills.small;
     }
 
+    // 5) If network speed is very slow - use both gif sources as the shorter preview gif
     if (networkSpeed === '2g') {
-      twoXImage = imageData.images.preview;
+      twoXImage = oneXImage = imageData.images.preview;
     }
 
-    // 2) return html for individual image
+    // 6) return html for individual image
     return `
     <figure class="gif__figure-container">
       <picture>
@@ -116,12 +128,11 @@ export default class ImageView {
           data-src-webp=" ${oneXImage.webp} 1x, ${twoXImage.webp} 2x" 
           
           alt="${imageData.title}" 
-          class="gif ${className}
+          class="gif gif__${this._className}
         "/>
       </picture>
       
     </figure>`;
-    // data-widths = "${image.images.small.width}px, ${image.images.medium.width}px"
   }
 
   #swapStillWithGif(entries, _observer) {

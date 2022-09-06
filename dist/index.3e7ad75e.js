@@ -555,21 +555,21 @@ const controlRandomGif = async function(e) {
         (0, _randomViewDefault.default).renderSpinner();
         // 2) Spin get another icon
         (0, _randomViewDefault.default).animateButton(e);
-        // 2) Load random Gif
+        // 3) Load random Gif
         await _model.loadRandomGif();
-        // 3) Render Results
+        // 4) Render Results
         (0, _randomViewDefault.default).render({
             imageData: _model.state.randomGif,
             networkSpeed: _model.state.networkSpeed
         });
-        // 4) Render loading skeleton
-        (0, _randomViewDefault.default).renderSkeleton("random");
-        // 5) remove skeleton on gif load, and begin render of trending gifs
+        // 5) Render loading skeleton
+        (0, _randomViewDefault.default).renderSkeleton();
+        // 6) Remove skeleton on gif load, and begin render of trending gifs
         (0, _randomViewDefault.default).onGifLoad(controlTrendingGifs);
-        // 6) LazyLoad images to gifs when in viewport
+        // 7) LazyLoad images to gifs when in viewport
         (0, _randomViewDefault.default).lazyLoader();
     } catch (error) {
-        console.error(error);
+        // console.error(error);
         (0, _randomViewDefault.default).renderError(error.message);
     }
 };
@@ -579,21 +579,21 @@ const controlSearchGifs = async function() {
         (0, _resultsViewDefault.default).renderSpinner();
         // 2) Get query
         const query = (0, _searchViewDefault.default).getQuery();
-        // 2) Load search results
+        // 3) Load search results
         await _model.loadSearchResults(query);
-        // // 3) Render results
+        // 4) Render results
         (0, _resultsViewDefault.default).render({
             imageData: _model.state.search.results,
             networkSpeed: _model.state.networkSpeed
         });
-        // 4) Render loading skeleton
-        (0, _resultsViewDefault.default).renderSkeleton("search");
-        // 5) remove skeleton on gif load
+        // 5) Render loading skeleton
+        (0, _resultsViewDefault.default).renderSkeleton();
+        // 6) remove skeleton on gif load
         (0, _resultsViewDefault.default).onGifLoad();
-        // 6) Lazy Load images to gifs when in viewport
+        // 7) Lazy Load images to gifs when in viewport
         (0, _resultsViewDefault.default).lazyLoader();
     } catch (error) {
-        console.error(error);
+        // console.error(error);
         (0, _resultsViewDefault.default).renderError(error.message);
     }
 };
@@ -603,19 +603,19 @@ const controlTrendingGifs = async function() {
         (0, _trendingViewDefault.default).renderSpinner();
         // 2) Load trending results
         await _model.loadTrendingResults();
-        // // 3) Render results
+        // 3) Render results
         (0, _trendingViewDefault.default).render({
             imageData: _model.state.trending,
             networkSpeed: _model.state.networkSpeed
         });
         // 4) Render loading skeleton
-        (0, _trendingViewDefault.default).renderSkeleton("trending");
+        (0, _trendingViewDefault.default).renderSkeleton();
         // 5) remove skeleton on gif load
         (0, _trendingViewDefault.default).onGifLoad();
         // 6) Lazy Load images to gifs when in viewport
         (0, _trendingViewDefault.default).lazyLoader();
     } catch (error) {
-        console.error(error);
+        // console.error(error);
         (0, _trendingViewDefault.default).renderError(error.message);
     }
 };
@@ -624,19 +624,18 @@ const controlNavigation = function(e) {
     (0, _navigationViewDefault.default).clearActiveSection();
     // 2) Add classes to nav bar
     (0, _navigationViewDefault.default).activeNavButton(e);
-    // 3) Get Section Id and save to state
-    _model.state.section = `section__${(0, _navigationViewDefault.default).getSectionId(e)}`;
-    // 4) Toggle 'hidden' class on sections
-    (0, _navigationViewDefault.default).revealSection(_model.state.section);
+    // 3) Reveal selected section
+    (0, _navigationViewDefault.default).revealSection(e);
 };
 const init = function() {
+    // Set up event handlers and link to relevant controller function
     (0, _randomViewDefault.default).randomHandler(controlRandomGif);
     (0, _searchViewDefault.default).searchHandler(controlSearchGifs);
     (0, _navigationViewDefault.default).navigationHandler(controlNavigation);
 };
 init();
 
-},{"./model":"4Fv2H","./views/randomView":"fnn6M","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/searchView":"bYnrN","./views/resultsView":"a2KWy","./views/trendingView":"i1WI3","./views/navigationView":"lwBHd"}],"4Fv2H":[function(require,module,exports) {
+},{"./model":"4Fv2H","./views/randomView":"fnn6M","./views/searchView":"bYnrN","./views/resultsView":"a2KWy","./views/trendingView":"i1WI3","./views/navigationView":"lwBHd","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4Fv2H":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "state", ()=>state);
@@ -656,7 +655,6 @@ const state = {
         results: []
     },
     trending: [],
-    section: "",
     networkSpeed: null
 };
 const dataIntoObject = function(data) {
@@ -804,7 +802,9 @@ const getJSON = async function(url) {
     }
 };
 const checkNetworkSpeed = function() {
+    // 1) Check if browser supports navigator.connection
     if (!navigator.connection) return "4g";
+    // 2) Return effective type: (4g, 3g or 2g)
     return navigator.connection.effectiveType;
 };
 
@@ -820,16 +820,18 @@ var _imageViewDefault = parcelHelpers.interopDefault(_imageView);
 class RandomView extends (0, _imageViewDefault.default) {
     _parentElement = document.querySelector(".img-container__random");
     #btn = document.querySelector(".btn__random");
+    _className = "random";
     randomHandler(handler) {
+        // Call random controller on page load and button click
         window.addEventListener("load", handler);
         this.#btn.addEventListener("click", handler);
     }
     animateButton(e) {
-        // 1) Return if from render of page
+        // 1) Check if event the page load or a click of the button
         if (e.target === document) return;
-        // 3) add spinning class
+        // 2) add spinning class to svg
         this.#btn.querySelector(".svg__repeat").classList.add("svg--spinning");
-        // 4) Remove class at end of animation
+        // 3) Remove class at end of animation
         const removeClass = function() {
             const icon = this.#btn.querySelector(".svg__repeat");
             if (!icon.classList.contains("svg--spinning")) return;
@@ -838,10 +840,7 @@ class RandomView extends (0, _imageViewDefault.default) {
         setTimeout(removeClass.bind(this), 2000);
     }
     _generateMarkup() {
-        return this._generateImageMarkup({
-            ...this._data,
-            className: "gif__random"
-        });
+        return this._generateImageMarkup(this._data.imageData);
     }
 }
 exports.default = new RandomView();
@@ -859,9 +858,13 @@ class ImageView {
     _data;
     render(data) {
         if (!data) return;
+        // 1) Save data to the class
         this._data = data;
+        // 2) Generate html
         const html = this._generateMarkup();
+        // 3) Clear html that is already there
         this.#clear();
+        // 4) Insert new html
         this._parentElement.insertAdjacentHTML("afterbegin", html);
     }
      #clear() {
@@ -889,9 +892,9 @@ class ImageView {
         this.#clear();
         this._parentElement.insertAdjacentHTML("afterbegin", markup);
     }
-    renderSkeleton(className) {
+    renderSkeleton() {
         const markup = `    
-    <div class="loading loading__${className}">
+    <div class="loading loading__${this._className}">
       <svg class="svg__loading svg__loading--first">
         <use href="${(0, _iconsSvgDefault.default)}#icon-circle"></use>
       </svg>
@@ -918,23 +921,27 @@ class ImageView {
             gif.addEventListener("load", this.removeSkeleton.bind(gif, additionalCallback));
         });
     }
-    _generateImageMarkup(data) {
-        const { imageData , networkSpeed , className  } = data;
-        // 1) Check size of image slot and the network speed and adjust src set accordingly
+    _generateImageMarkup(imageData) {
+        // 1) Get network speed
+        const networkSpeed = this._data.networkSpeed;
+        // 2) Variables for pixel density and still image sources
         let oneXImage;
         let twoXImage;
         let stillImage;
-        if (className === "gif__random" && networkSpeed === "4g") {
+        // 3) If big image and good internet speed save HD sources.
+        if (this._className === "random" && networkSpeed === "4g") {
             oneXImage = imageData.images.medium;
             twoXImage = imageData.images.original;
             stillImage = imageData.images.stills.normal;
+        // 4) For tiled images or when network speed is 3g use smaller sources
         } else {
             oneXImage = imageData.images.small;
             twoXImage = imageData.images.medium;
             stillImage = imageData.images.stills.small;
         }
-        if (networkSpeed === "2g") twoXImage = imageData.images.preview;
-        // 2) return html for individual image
+        // 5) If network speed is very slow - use both gif sources as the shorter preview gif
+        if (networkSpeed === "2g") twoXImage = oneXImage = imageData.images.preview;
+        // 6) return html for individual image
         return `
     <figure class="gif__figure-container">
       <picture>
@@ -943,12 +950,11 @@ class ImageView {
           data-src-webp=" ${oneXImage.webp} 1x, ${twoXImage.webp} 2x" 
           
           alt="${imageData.title}" 
-          class="gif ${className}
+          class="gif gif__${this._className}
         "/>
       </picture>
       
     </figure>`;
-    // data-widths = "${image.images.small.width}px, ${image.images.medium.width}px"
     }
      #swapStillWithGif(entries, _observer) {
         entries.forEach((entry)=>{
@@ -979,7 +985,7 @@ class ImageView {
 }
 exports.default = ImageView;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../../img/icons.svg":"3LuCS"}],"3LuCS":[function(require,module,exports) {
+},{"../../img/icons.svg":"3LuCS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3LuCS":[function(require,module,exports) {
 module.exports = require("./helpers/bundle-url").getBundleURL("fXVDJ") + "icons.21bad73c.svg" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -1035,6 +1041,7 @@ class SearchView {
         return value;
     }
     searchHandler(handler) {
+        // Fire the search controller on a submit of the search form
         this.#parentElement.addEventListener("submit", function(e) {
             e.preventDefault();
             handler();
@@ -1054,18 +1061,11 @@ var _tiledImageView = require("./tiledImageView");
 var _tiledImageViewDefault = parcelHelpers.interopDefault(_tiledImageView);
 class ResultsView extends (0, _tiledImageViewDefault.default) {
     _parentElement = document.querySelector(".grid__search-results");
-    _generateMarkup() {
-        // add relativeWidths
-        this._calculateRelativeWidth();
-        return this._data.imageData.map((result)=>this._generateImageMarkupWithGridWrapper({
-                imageData: result,
-                className: "gif__trending"
-            })).join("");
-    }
+    _className = "search";
 }
 exports.default = new ResultsView();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./tiledImageView":"bqcBP"}],"bqcBP":[function(require,module,exports) {
+},{"./tiledImageView":"bqcBP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bqcBP":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 //////////////////////////////////////////////////////////////////////
@@ -1075,11 +1075,19 @@ parcelHelpers.defineInteropFlag(exports);
 var _imageView = require("./imageView");
 var _imageViewDefault = parcelHelpers.interopDefault(_imageView);
 class TiledImageView extends (0, _imageViewDefault.default) {
-    _generateImageMarkupWithGridWrapper(image, className) {
-        const width = image.imageData.images.relativeWidth;
+    _generateMarkup() {
+        // 1) Add relativeWidths
+        this._calculateRelativeWidth();
+        // 2) Loop through images and generate inside a grid wrapper
+        return this._data.imageData.map((result)=>this._generateImageMarkupWithGridWrapper(result)).join("");
+    }
+    _generateImageMarkupWithGridWrapper(image) {
+        // 1) get relative width
+        const width = image.images.relativeWidth;
+        // 2) return markup inside a grid item wrapper with the correct width class
         return `
       <div class="grid__item grid__item--${width}">
-        ${this._generateImageMarkup(image, className)}
+        ${this._generateImageMarkup(image)}
       </div>`;
     }
     _calculateRelativeWidth() {
@@ -1088,7 +1096,7 @@ class TiledImageView extends (0, _imageViewDefault.default) {
         for(let i = 0; i < data.length; i += 2){
             const width1 = data[i].images.width;
             const width2 = data[i + 1].images.width;
-            // 2) Compare Widths and add to relative widths property
+            // 2) Compare widths and add to relative widths for each item
             data[i].images.relativeWidth = (width1 / (width1 + width2) * 10).toFixed();
             data[i + 1].images.relativeWidth = (width2 / (width1 + width2) * 10).toFixed();
         }
@@ -1107,21 +1115,11 @@ var _tiledImageView = require("./tiledImageView");
 var _tiledImageViewDefault = parcelHelpers.interopDefault(_tiledImageView);
 class TrendingView extends (0, _tiledImageViewDefault.default) {
     _parentElement = document.querySelector(".grid__trending");
-    trendingHandler(handler) {
-        window.addEventListener("load", handler);
-    }
-    _generateMarkup() {
-        // add relativeWidths
-        this._calculateRelativeWidth(this._data);
-        return this._data.imageData.map((result)=>this._generateImageMarkupWithGridWrapper({
-                imageData: result,
-                className: "gif__trending"
-            })).join("");
-    }
+    _className = "trending";
 }
 exports.default = new TrendingView();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./tiledImageView":"bqcBP"}],"lwBHd":[function(require,module,exports) {
+},{"./tiledImageView":"bqcBP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lwBHd":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 //////////////////////////////////////////////////////////////////////
@@ -1136,21 +1134,23 @@ class NavigationView {
         this.#navItems.forEach((btn)=>btn.addEventListener("click", handler));
     }
     clearActiveSection() {
+        // Remove "active" class from all buttons and nav items
         this.#buttons.forEach((btn)=>btn.classList.remove("btn__navigation--active"));
         this.#navItems.forEach((item)=>item.classList.remove("navigation__item--active"));
     }
     activeNavButton(e) {
+        // Add active class to clicked button and nav item
         const activeBtn = e.target.closest(".btn");
         const activeItem = e.target.closest(".navigation__item");
         activeItem.classList.add("navigation__item--active");
         activeBtn.classList.add("btn__navigation--active");
     }
-    getSectionId(e) {
-        return e.target.closest(".navigation__item").dataset.section;
-    }
-    revealSection(activeClassName) {
+    revealSection(e) {
+        // 1) Find clicked section from dataset of nav item
+        const activeSection = e.target.closest(".navigation__item").dataset.section;
+        // 2) remove "hidden-small-screen" from sections from other sections and add to clicked one
         this.#sections.forEach((section)=>{
-            if (section.classList.contains(activeClassName)) section.classList.remove("hidden-small-screen");
+            if (section.classList.contains(`section__${activeSection}`)) section.classList.remove("hidden-small-screen");
             else section.classList.add("hidden-small-screen");
         });
     }

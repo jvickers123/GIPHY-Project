@@ -16,6 +16,8 @@
   }
 
   @include respond(desk) {
-    max-width: calc(100% - 6rem);
+    &__random {
+      max-width: calc(100% - 6rem);
+    }
   }
 }

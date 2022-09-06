@@ -16,14 +16,8 @@
 // MEDIA QUERY MANAGER
 
 @mixin respond($breakpoint) {
-  @if $breakpoint ==tab-port {
+  @if $breakpoint ==tablet {
     @media only screen and (min-width: 37.5em) {
-      @content;
-    }
-  }
-
-  @if $breakpoint ==tab-lan {
-    @media only screen and (min-width: 56.25em) {
       @content;
     }
   }

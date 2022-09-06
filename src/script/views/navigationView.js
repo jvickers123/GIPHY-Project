@@ -13,6 +13,7 @@ class NavigationView {
   }
 
   clearActiveSection() {
+    // Remove "active" class from all buttons and nav items
     this.#buttons.forEach(btn =>
       btn.classList.remove('btn__navigation--active')
     );
@@ -22,6 +23,7 @@ class NavigationView {
   }
 
   activeNavButton(e) {
+    // Add active class to clicked button and nav item
     const activeBtn = e.target.closest('.btn');
     const activeItem = e.target.closest('.navigation__item');
 
@@ -29,13 +31,13 @@ class NavigationView {
     activeBtn.classList.add('btn__navigation--active');
   }
 
-  getSectionId(e) {
-    return e.target.closest('.navigation__item').dataset.section;
-  }
+  revealSection(e) {
+    // 1) Find clicked section from dataset of nav item
+    const activeSection = e.target.closest('.navigation__item').dataset.section;
 
-  revealSection(activeClassName) {
+    // 2) remove "hidden-small-screen" from sections from other sections and add to clicked one
     this.#sections.forEach(section => {
-      if (section.classList.contains(activeClassName))
+      if (section.classList.contains(`section__${activeSection}`))
         section.classList.remove('hidden-small-screen');
       else section.classList.add('hidden-small-screen');
     });

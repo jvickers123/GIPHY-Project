@@ -3,8 +3,8 @@
   background-color: $colour-accent;
   color: $colour-black;
   cursor: pointer;
-
   transition: transform 0.1s;
+
   &:hover {
     background-color: darken($colour-accent, 10%);
   }
@@ -17,6 +17,7 @@
     background-color: transparent;
     padding: 0.8rem 3rem;
     color: $colour-black;
+
     &:hover {
       background-color: darken($colour-grey-light, 10%);
       border-radius: 5px;

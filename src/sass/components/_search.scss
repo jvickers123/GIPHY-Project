@@ -1,12 +1,7 @@
 .search {
   @include flexcenter(row);
-  // width: 100vw;
-  // position: sticky;
-  // top: 16rem;
-  // background-color: $colour-white;
   padding: 0 3rem;
   z-index: 1;
-  // @include boxshadow-bottom;
 
   flex: 1;
   &__field {

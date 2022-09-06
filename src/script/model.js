@@ -13,7 +13,6 @@ export const state = {
     results: [],
   },
   trending: [],
-  section: '',
   networkSpeed: null,
 };
 

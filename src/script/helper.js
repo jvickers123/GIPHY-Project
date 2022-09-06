@@ -29,6 +29,9 @@ export const getJSON = async function (url) {
 };
 
 export const checkNetworkSpeed = function () {
+  // 1) Check if browser supports navigator.connection
   if (!navigator.connection) return '4g';
+
+  // 2) Return effective type: (4g, 3g or 2g)
   return navigator.connection.effectiveType;
 };

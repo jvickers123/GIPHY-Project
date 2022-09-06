@@ -332,7 +332,7 @@ body {
 }
 
 @media only screen and (min-width: 56.25em) {
-  .loading {
+  .loading__random {
     max-width: calc(100% - 6rem);
   }
 }

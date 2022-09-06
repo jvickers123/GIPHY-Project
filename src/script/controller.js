@@ -20,24 +20,25 @@ const controlRandomGif = async function (e) {
     // 2) Spin get another icon
     RandomView.animateButton(e);
 
-    // 2) Load random Gif
+    // 3) Load random Gif
     await model.loadRandomGif();
 
-    // 3) Render Results
+    // 4) Render Results
     RandomView.render({
       imageData: model.state.randomGif,
       networkSpeed: model.state.networkSpeed,
     });
-    // 4) Render loading skeleton
-    RandomView.renderSkeleton('random');
 
-    // 5) remove skeleton on gif load, and begin render of trending gifs
+    // 5) Render loading skeleton
+    RandomView.renderSkeleton();
+
+    // 6) Remove skeleton on gif load, and begin render of trending gifs
     RandomView.onGifLoad(controlTrendingGifs);
 
-    // 6) LazyLoad images to gifs when in viewport
+    // 7) LazyLoad images to gifs when in viewport
     RandomView.lazyLoader();
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     RandomView.renderError(error.message);
   }
 };
@@ -50,25 +51,25 @@ const controlSearchGifs = async function () {
     // 2) Get query
     const query = SearchView.getQuery();
 
-    // 2) Load search results
+    // 3) Load search results
     await model.loadSearchResults(query);
 
-    // // 3) Render results
+    // 4) Render results
     ResultsView.render({
       imageData: model.state.search.results,
       networkSpeed: model.state.networkSpeed,
     });
 
-    // 4) Render loading skeleton
-    ResultsView.renderSkeleton('search');
+    // 5) Render loading skeleton
+    ResultsView.renderSkeleton();
 
-    // 5) remove skeleton on gif load
+    // 6) remove skeleton on gif load
     ResultsView.onGifLoad();
 
-    // 6) Lazy Load images to gifs when in viewport
+    // 7) Lazy Load images to gifs when in viewport
     ResultsView.lazyLoader();
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     ResultsView.renderError(error.message);
   }
 };
@@ -81,14 +82,14 @@ const controlTrendingGifs = async function () {
     // 2) Load trending results
     await model.loadTrendingResults();
 
-    // // 3) Render results
+    // 3) Render results
     TrendingView.render({
       imageData: model.state.trending,
       networkSpeed: model.state.networkSpeed,
     });
 
     // 4) Render loading skeleton
-    TrendingView.renderSkeleton('trending');
+    TrendingView.renderSkeleton();
 
     // 5) remove skeleton on gif load
     TrendingView.onGifLoad();
@@ -96,7 +97,7 @@ const controlTrendingGifs = async function () {
     // 6) Lazy Load images to gifs when in viewport
     TrendingView.lazyLoader();
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     TrendingView.renderError(error.message);
   }
 };
@@ -108,13 +109,12 @@ const controlNavigation = function (e) {
   // 2) Add classes to nav bar
   NavigationView.activeNavButton(e);
 
-  // 3) Get Section Id and save to state
-  model.state.section = `section__${NavigationView.getSectionId(e)}`;
-  // 4) Toggle 'hidden' class on sections
-  NavigationView.revealSection(model.state.section);
+  // 3) Reveal selected section
+  NavigationView.revealSection(e);
 };
 
 const init = function () {
+  // Set up event handlers and link to relevant controller function
   RandomView.randomHandler(controlRandomGif);
   SearchView.searchHandler(controlSearchGifs);
   NavigationView.navigationHandler(controlNavigation);

@@ -19,6 +19,7 @@ class SearchView {
   }
 
   searchHandler(handler) {
+    // Fire the search controller on a submit of the search form
     this.#parentElement.addEventListener('submit', function (e) {
       e.preventDefault();
       handler();

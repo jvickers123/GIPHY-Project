@@ -8,6 +8,7 @@
   align-items: center;
   justify-content: space-between;
   position: relative;
+
   &__random {
     height: calc(80vh - 10rem);
     @include respond(desk) {
